@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(120deg, #ffcc99, #00ffff);
+    color: black;
+    font-family: 'Lato', sans-serif;
+    min-height: 100px;
+}
+
+header {
+    font-size: 3rem;
+    margin-top: 20px;
+}
+
+header, form {
+    min-height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form i {
+    font-size: 32px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+    padding-left: 10px;
+    margin: 0;
+}
+
+form i:hover {
+    color: #ffcc99;
+}
+
+form input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid black;
+    margin-right: 10px;
+    padding: 10px;
+    outline: none;
+    font-size: 20px;
+}
+
+.todo-container {
+    display: grid;
+    grid-template-areas: 'uncomplete complete';
+}
+
+.todo-uncomplete-container {
+    grid-area: uncomplete;
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.todo-complete-container {
+    grid-area: complete;
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.todo {
+    padding: 18px;
+    margin: 12px auto;
+    text-align: left;
+    font-size: 18px;
+    max-width: 425px;
+    overflow: hidden;
+    border-bottom: 3px solid black;
+    transition: all 1s ease; 
+}
+
+.fa-trash-alt, .fa-check-double {
+    float: right;
+    transition: all 0.4s ease; 
+    background: none;
+    border: none;
+}
+
+.fa-trash-alt:hover {
+    color:#b30000;
+}
+
+.fa-check-double:hover {
+    color: #66ffcc;
+}
+
+span {
+    margin-right: 1rem;
+}
+
+.todo i {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.remove {
+    transform: translateY(8rem) rotate(20deg);
+    opacity: 0;
+}
