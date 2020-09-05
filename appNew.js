@@ -32,7 +32,7 @@ const todoListController = (function(){
     }
     
     return {
-        addNewTodo: function(input, type='uncomplete') {
+        addNewTodoItem: function(input, type='uncomplete') {
             var newItem, ID;
             
             // Create new ID untuk data struktur
@@ -47,6 +47,9 @@ const todoListController = (function(){
             
             // Tambah item ke data struktur
             data.allTodoList[type].push(newItem);
+
+            // Save data object ke local storage 
+            localStorage.setItem('item', JSON.stringify(data));
             
             // Return the new item to do list
             return newItem;
@@ -60,6 +63,9 @@ const todoListController = (function(){
             if (index !== -1) {
                 data.allTodoList[type].splice(index, 1);
             }
+
+            // Save data object ke local storage 
+            localStorage.setItem('item', JSON.stringify(data));
         },
 
         getValueData: todoItem => {
@@ -69,7 +75,11 @@ const todoListController = (function(){
             return data.allTodoList[type][index].value;
         },
 
-        checkData: () => console.log(data)
+        checkData: () => console.log(data),
+
+        getLocalStorageItem: () => JSON.parse(localStorage.getItem('item')),
+
+        clearLocalStorage: () => localStorage.clear()
     }
 
 })();
@@ -142,24 +152,48 @@ const controller = (function(todoListCtrl, UICtrl) {
         
         document.querySelector(DOM.completeList).addEventListener('click', action);
         document.querySelector(DOM.uncompleteList).addEventListener('click', action);
-        
-        //document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);   */     
+          
     };
+
+    const loadLocalStorage = function() {
+        // get local storage item dari controller
+        const localStorageItem = todoListCtrl.getLocalStorageItem()
+
+        if (localStorageItem !== null) {
+            // add local storage item ke struktur todolist controller
+            localStorageItem.allTodoList.uncomplete.forEach(cur => {
+                todoListCtrl.addNewTodoItem(cur.value, cur.type);
+            })
+
+            localStorageItem.allTodoList.complete.forEach(cur => {
+                todoListCtrl.addNewTodoItem(cur.value, cur.type);
+            })
+
+            // add local storage item ke UI
+            localStorageItem.allTodoList.uncomplete.forEach(cur => {
+                UICtrl.addNewTodoItem(cur);
+            });
+
+            localStorageItem.allTodoList.complete.forEach(cur => {
+                UICtrl.addNewTodoItem(cur);
+            });
+        }
+    }
 
     const addTodoList = function() {
         var input, newTodoItem;
         
-        // 1. Get input dari user
+        // get input dari user
         input = UICtrl.getInput();      
         
         if (input !== "") {
-            // 2. Add the item ke budget controller
-            newTodoItem = todoListCtrl.addNewTodo(input);
+            // add the item ke todolist controller
+            newTodoItem = todoListCtrl.addNewTodoItem(input);
             
-            // 3. Add the item ke UI
+            // add the item ke UI
             UICtrl.addNewTodoItem(newTodoItem);
 
-            // 4. Clear input fields
+            // clear input fields
             UICtrl.clearFields();
         }
     };
@@ -167,6 +201,7 @@ const controller = (function(todoListCtrl, UICtrl) {
     const action = function(event) {
         const todoItem = event.target.parentElement;
 
+        // ketika klik trash button maka panggil fungsi delete item
         if (event.target.classList[1] === 'fa-trash-alt') {
             // delete dari struktur data
             todoListCtrl.deleteTodoListItem(todoItem);
@@ -175,6 +210,7 @@ const controller = (function(todoListCtrl, UICtrl) {
             UICtrl.deleteTodoListItem(todoItem);
         }
 
+        // ketika klik finish button maka panggil fungsi finish item
         if (event.target.classList[1] === 'fa-check-double') {
             // pindah dari struktur data uncomplete ke complete
             const value = todoListCtrl.getValueData(todoItem);
@@ -182,7 +218,7 @@ const controller = (function(todoListCtrl, UICtrl) {
             UICtrl.deleteTodoListItem(todoItem);
             
             // pindah dari container UI uncomplete ke complete
-            const newTodoItem = todoListCtrl.addNewTodo(value, "complete");
+            const newTodoItem = todoListCtrl.addNewTodoItem(value, "complete");
             UICtrl.addNewTodoItem(newTodoItem);
 
         }
@@ -191,8 +227,9 @@ const controller = (function(todoListCtrl, UICtrl) {
     return {
         init: function() {
             console.log('To Do List has started. :)');
+            loadLocalStorage();
             setupEventListeners();
-        }
+        },
     };
 
 })(todoListController, UIController);
