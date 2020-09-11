@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: linear-gradient(120deg, #ffcc99, #00ffff);
+    color: black;
+    font-family: 'Lato', sans-serif;
+}
+
+header {
+    font-size: 48px;
+    margin-top: 20px;
+}
+
+header, form {
+    min-height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form i {
+    font-size: 32px;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+    padding-left: 10px;
+    margin: 0;
+}
+
+form i:hover {
+    color: #ffcc99;
+}
+
+form input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid black;
+    margin-right: 10px;
+    padding: 10px;
+    outline: none;
+    font-size: 24px;
+}
+
+.todo-container {
+    display: flex;
+    padding: 50px;
+    justify-content: space-between;
+}
+
+.todo-uncomplete-container {
+    text-align: center;
+    width: 900px;
+}
+
+.todo-complete-container {
+    text-align: center;
+    width: 900px;
+}
+
+.todo {
+    padding: 18px;
+    margin: 12px auto;
+    text-align: left;
+    font-size: 18px;
+    max-width: 425px;
+    border-bottom: 3px solid black;
+    transition: all 1s ease;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.todo-item {
+    margin-right: auto;
+    font-size: 18px;
+    word-break: break-word;
+}
+
+.fa-trash-alt, .fa-check-double {
+    margin-left: 20px;
+    background: none;
+    border: none;
+}
+
+.fa-trash-alt:hover {
+    color:#b30000;
+}
+
+.fa-check-double:hover {
+    color: #66ffcc;
+}
+
+.todo i {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.remove {
+    transform: translateY(8rem) rotate(20deg);
+    opacity: 0;
+}
