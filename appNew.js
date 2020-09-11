@@ -105,7 +105,7 @@ const UIController = (function() {
             if (obj.type === 'uncomplete') {
                 element = DOMstrings.uncompleteList;
                 
-                html = `<div class="todo" id="uncomplete-%id%"> <span class="todo-item">%value%</span> <i class="fas fa-trash-alt"></i> <i class="fas fa-check-double"></i> </div>`;
+                html = `<div class="todo" id="uncomplete-%id%"> <span class="todo-item">%value%</span> <i class="fas fa-check-double"></i> <i class="fas fa-trash-alt"></i> </div>`;
             } else if (obj.type === 'complete') {
                 element = DOMstrings.completeList;
                 
